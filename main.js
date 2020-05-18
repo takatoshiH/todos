@@ -4,9 +4,18 @@ var vm = new Vue({
         newItem: "",
         todos: [
             { title: "task1", isDone: false },
-            { title: "task2", isDone: false },
-            { title: "task3", isDone: true }
         ]
+    },
+    watch: {
+        todos: {
+            handler: function () {
+                localStorage.setItem("todos", JSON.stringify(this.todos));
+            },
+            deep: true
+        }
+    },
+    mounted: function () {
+        this.todos = JSON.parse(localStorage.getItem("todos") || [])
     },
     methods: {
         addItem: function () {
